@@ -1,0 +1,38 @@
+{% extends "main/layout.html" %}
+{% load static %}
+{% block title %}
+    Корзина
+{% endblock %}
+{% block main %}
+<div class="main-container cart">
+    <div class="carts">
+        {% for item in cart %}
+            {% with product=item.product %}
+            <div class="cart-container">
+                    <div class="img-container">
+                        <a href= '/good/{{product.id_good}}'>
+                            <img src=" {{ product.main_image.url }}" id='table-img'>
+                        </a>
+                    </div>
+                    <div class="text-container">{{ product.name }}</div>
+                    <div class="text-container">{{ item.quantity }} шт.</div>
+                    <div class="text-container">
+                        <a href="{% url 'cart:cart_remove' product.id_good%}">Удалить</a>
+                    </div>
+                    <div class="text-container">${{ item.total_price }}</div>
+                </div>
+            {% endwith %}
+        {% endfor %}
+    </div>
+    <div class="cart-container tiny">
+        <p class="text-padding">Итого:</p>
+        <p class="text-padding">${{ cart.get_total_price }}</p>
+        <a class="text-padding" href="{% url 'main:home' %}">
+            <button class="custom-btn btn-13" >Назад</button>
+        </a>
+        <a class="text-padding" href="{% url 'orders:order_create' %}"  class="button">
+            <button class="custom-btn btn-13" >Оформить</button>
+        </a>
+    </div>
+</div>
+{% endblock %}

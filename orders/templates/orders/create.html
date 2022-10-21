@@ -1,0 +1,30 @@
+{% extends "main/layout.html" %}
+{% load static %}
+{% block title %}
+    Оформление заказа
+{% endblock %}
+{% block main %}
+<div class="main-container">
+    <div class="account-container">
+        <div class="order-info">
+            <h3>Ваш заказ</h3>
+            <ul>
+                {% for item in cart %}
+                    {{ item.quantity }}x {{ item.product.name }} ${{ item.total_price }}<br>
+                {% endfor %}
+            </ul>
+            <p>Итого: ${{ cart.get_total_price }}</p>
+        </div>
+        <form action="." method="post" class="order-form">
+            {{ form.first_name }}<br>
+            {{ form.last_name }}<br>
+            {{ form.email }}<br>
+            {{ form.address }}<br>
+            {{ form.postal_code }}<br>
+            {{ form.city }}<br>
+            <button class="custom-btn btn-13"  type="submit">Принять</button>
+            {% csrf_token %}
+        </form>
+    </div>
+</div>
+{% endblock %}

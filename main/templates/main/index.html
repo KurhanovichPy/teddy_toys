@@ -1,0 +1,38 @@
+{% extends 'main/layout.html'%}
+
+{% block title %}
+Главная
+{% endblock%}
+
+{% block main%}
+{% load static %}
+<img id="main_photo" src="{% static 'main/img/main_foto.jpg'%}" alt = 'main_photo'>
+<div class="showcase">
+    {% for good in goods %}
+        <div class="good">
+            <a href="/good/{{good.id_good}}">
+                <div class ="scale">
+                    <img id='goods_img' src="{{good.main_image.url}}" alt="{ photo }">
+                </div>
+            </a>
+            <p>{{ good.name }}</p>
+            <p>{{ good.price }} USD</p>
+        </div>
+    {% endfor %}
+</div>
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a class="ghost-button" href="?page=1">⋘</a>
+            <a class="ghost-button" href="?page={{ page_obj.previous_page_number }}">≪</a>
+        {% endif %}
+            <span class="current">
+                {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}
+            </span>
+        {% if page_obj.has_next %}
+            <a class="ghost-button" href="?page={{ page_obj.next_page_number }}">≫</a>
+            <a class="ghost-button" href="?page={{ page_obj.paginator.num_pages }}">⋙</a>
+        {% endif %}
+    </span>
+</div>
+{% endblock%}

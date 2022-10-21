@@ -1,0 +1,13 @@
+{% extends "main/layout.html" %}
+{% load static %}
+{% block title %}
+    Спасибо
+{% endblock %}
+{% block main %}
+<div class="main-container reg">
+  <h1>Спасибо за заказ</h1>
+    <p>Ваш заказ принят. Номер заказа
+        <strong>{{ order.id_order }}</strong>.
+    </p>
+</div>
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends "main/layout.html" %}
+{% load static %}
+{% block title %}
+   Личный кабинет
+{% endblock %}
+{% block main %}
+{% load static %}
+{% load custom_filters %}
+<div class="main-container">
+    <div class="order-container" >
+        <div class="account-data">
+            <h5>Личный кабинет</h5><br>
+            {% for user in user_info %}
+                <img style="width: 150px; height: auto" src="{% static 'main/img/account.png' %}"><br>
+                <p>Логин: {{ user.username}}</p>
+                <p>Имя: {{ user.first_name }}</p>
+                <p>Фамилия:  {{ user.last_name }}</p>
+                <p>Email: {{ user.email }}</p>
+            {% endfor %}
+            </div>
+        <hr>
+        <h5 style="text-align: center">История заказов</h5>
+        {% for order in orders %}
+            <p>Имя заказчика: {{ order.first_name }}</p>
+            <p>Фамилия заказчика: {{ order.last_name }}</p>
+            <p>Город: {{ order.city }}</p>
+            <p>Адрес: {{ order.address }}</p>
+            <p>Индекс: {{ order.postal_code }}</p>
+            <br>
+        {% with products=orders_items|get_item:order.id_order %}
+        <div class="orders-shows">
+        {% for i, j in products.items %}
+            <div class="order-description">
+                <img id='mini_img' src="/media/{{j|get_item:'main_image'}}" alt="{ photo }">
+                <p>{{j|get_item:'name'}}</p>
+                <p>{{j|get_item:'quantity'}} шт.</p>
+                <p>{{j|get_item:'price'}} USD</p>
+            </div>
+        {% endfor %}
+            </div>
+        {% endwith %}
+        <br>
+        <p> Итого: {{total_prices|get_item:order.id_order}} USD</p>
+        <hr>
+        {% endfor %}
+        </div>
+</div>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends "main/layout.html" %}
+{% load static %}
+{% block title %}
+   Вход
+{% endblock %}
+{% block main %}
+<div class="main-container">
+    <div class="account-container">
+        <h1>Вход</h1><br>
+        <form action="." method="post">
+            {{ form.username}}<br>
+            {{ form.password}}<br>
+            {% csrf_token %}
+            <span>{{value}}</span><br>
+            <button class="custom-btn btn-13" type="submit">Войти</button><br>
+            <a href="#">Главная</a>
+            <a href="{% url 'account:register' %}">Регистрация</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

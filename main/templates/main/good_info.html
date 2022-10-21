@@ -1,0 +1,59 @@
+{% extends 'main/layout.html'%}
+
+{% block title%}
+Товар
+{% endblock%}
+
+{% block main%}
+<div class="slider">
+  <div id="carouselExampleIndicators" class="carousel slide carousel-fade" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"
+              class="active" aria-current="true" aria-label="Slide 1">
+
+      </button>
+      {% for index in counter %}
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="{{ index }}"
+                aria-label="Slide 2">
+
+        </button>
+      {% endfor%}
+    </div>
+    <div class="carousel-inner">
+      {% for good in goods %}
+        <div class="carousel-item active">
+          <img src="{{good.main_image.url}}" class="info" alt="...">
+        </div>
+      {% endfor%}
+      {% for photo in photos %}
+        <div class="carousel-item">
+          <img src="{{photo.image.url}}" class="info" alt="...">
+        </div>
+      {% endfor%}
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"  data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Предыдущий</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"  data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Следующий</span>
+    </button>
+  </div>
+  <div class="description_photo">
+    {% for good in goods %}
+      <h5 style="text-align: center">{{good.name}}</h5>
+        &nbsp;
+      <p style="text-indent: 25px;">{{good.description}}</p>
+      <br>
+      <form action="{% url 'cart:cart_add' good.id_good %}" method="post">
+          {{ cart_product_form }}
+          {% csrf_token %}
+          <br>
+          <br>
+          <button class="custom-btn btn-13"  type="submit">В корзину</button>
+      </form>
+      {% endfor%}
+    </div>
+</div>
+{% endblock%}
